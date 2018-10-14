@@ -8,7 +8,7 @@ Created on Wed Nov 22 13:06:20 2017
 import requests
 import json
 import time 
-
+import sys
 import math
 
 systemDict= {} 
@@ -78,19 +78,33 @@ f.close
 
 UREL1='https://zkillboard.com/kill/'
 
-koraba_w_sys="Nennamaila"
-
-
 # JITA  https://zkillboard.com/system/30000142/
 # UEDAMA  https://zkillboard.com/system/30002768/
 
 
 
-print ("---------= start")
+koraba_w_sys="Jita"
+jumpLimit=1000
+minCost=0
+
+for pair in sys.argv:
+
+    my_list = pair.split(":")
+    if my_list[0]=='jumpLimit':
+        jumpLimit=my_list[1]
+    if my_list[0]=='minCost':
+        minCost=my_list[1]
+    if my_list[0]=='sysa':
+        koraba_w_sys=my_list[1]
+    
+
+print ("---= start --- jumpLimit:"+str(jumpLimit)
+       +"  minCost:"+str(minCost)
+       +"  sysa:"+koraba_w_sys)
 
 
 while 1==1:
-    url = 'https://redisq.zkillboard.com/listen.php?queueID=pipetka1023'   
+    url = 'https://redisq.zkillboard.com/listen.php' #?queueID=pipetka1023'   
     headers = {'user-agent': 'my-app-test/0.0.1'}
     r = requests.get(url, headers=headers)
     #print(r.text)
@@ -127,16 +141,18 @@ while 1==1:
          #   print("Distance to fly from "+systemDict.get(koraba_w_sys,"figgevoznaet_sysa")+" is "+str(parsed_dist_json["count"]))
             dist_to_fly=parsed_dist_json["count"]
 
-        
-        print(timestamp
-            + ' Jumps_to_loc '+str(dist_to_fly)
-            + ' total$$$ '+totaldeneg
-            + ' system  '+systemDict.get(sysa,"figgevoznaet_sysa") 
-            + ' security ' +systemSec.get(sysa,"_____")  
-            + ' ship ' + typesDict.get(shipp,"figgevoznaet_ship") 
-            + ' Location ' + locDict.get(zkillLocationID,"GDETO")
-            + ' DistFromSUN '+str(dista)
-            + '      '+UREL1+killid+'/')
+        if int(dist_to_fly)<int(jumpLimit) and int(datka['zkb']['totalValue'])>int(minCost):
+            print(timestamp
+                + ' Jumps_to_loc '+str(dist_to_fly)
+                + ' total$$$ '+totaldeneg
+                + ' system  '+systemDict.get(sysa,"figgevoznaet_sysa") 
+                + ' security ' +systemSec.get(sysa,"_____")  
+                + ' ship ' + typesDict.get(shipp,"figgevoznaet_ship") 
+                + ' Location ' + locDict.get(zkillLocationID,"GDETO")
+                + ' DistFromSUN '+str(dista)
+                + '      '+UREL1+killid+'/')
+        else:
+            print("-=skip=-")
  
         #f = open('workfile', 'a')            
         #f.write(timestamp+'   totaldeneg '+totaldeneg+'  sysa  '+systemDict.get(sysa,"figgevoznaet_sysa") 
@@ -145,6 +161,7 @@ while 1==1:
         #    + '      '+UREL1+killid+'/' + '\n')
         #f.close
         
+
 
             
     time.sleep(sleepTime)
