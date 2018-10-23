@@ -133,15 +133,16 @@ while 1==1:
         #print(sysa)
         dist_to_fly=100500
         if systemDict.get(sysa,"figgevoznaet_sysa")[0]!="J":
-            distURL="http://everest.kaelspencer.com/route/"+koraba_w_sys+"/"+systemDict.get(sysa,"figgevoznaet_sysa")+"/"
+            distURL="http://everest.kaelspencer.com/jump/"+koraba_w_sys+"/"+systemDict.get(sysa,"figgevoznaet_sysa")+"/"
             #print(distURL)
             rdis = requests.get(distURL, headers=headers)
             #print(rdis.text)
             parsed_dist_json = json.loads(rdis.text)
          #   print("Distance to fly from "+systemDict.get(koraba_w_sys,"figgevoznaet_sysa")+" is "+str(parsed_dist_json["count"]))
-            dist_to_fly=parsed_dist_json["count"]
+            dist_to_fly=parsed_dist_json["jumps"]
 
-        if int(dist_to_fly)<int(jumpLimit) and int(datka['zkb']['totalValue'])>int(minCost):
+        if (int(dist_to_fly)<int(jumpLimit) 
+            and int(datka['zkb']['totalValue'])>int(minCost)):
             print(timestamp
                 + ' Jumps_to_loc '+str(dist_to_fly)
                 + ' total$$$ '+totaldeneg
