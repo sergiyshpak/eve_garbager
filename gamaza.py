@@ -50,13 +50,14 @@ with open("loc.csv", "r") as ins:
         
 
 
-koraba_w_sys="Ohkunen"
-jumpLimit=10
-minCost=0
-
 
 class App():
     def __init__(self):
+        
+        self.koraba_w_sys="Ohkunen"
+        self.jumpLimit=10
+        self.minCost=0
+        
         self.root = Tk()
         self.root.title("GDSFDSADS EREF EA")
         
@@ -82,10 +83,14 @@ class App():
         self.root.mainloop()
 
     def set_dist(self):
-        jumpLimit=14
+        #jumpLimit=14
+        self.jumpLimit=int(self.e2.get())
+        print("dist  --"+self.e2.get())
         
     def set_home(self):    
-        koraba_w_sys="M-OEE8"
+        #koraba_w_sys="M-OEE8"
+        print("home  --"+self.e1.get())
+        self.koraba_w_sys=self.e1.get()
 
     def openHLink(self, urik):
         #print ("Going to .."+urik)
@@ -123,7 +128,7 @@ class App():
             #print(sysa)
             dist_to_fly=100500
             if systemDict.get(sysa,"figgevoznaet_sysa")[0]!="J":
-                distURL="http://everest.kaelspencer.com/jump/"+koraba_w_sys+"/"+systemDict.get(sysa,"figgevoznaet_sysa")+"/"
+                distURL="http://everest.kaelspencer.com/jump/"+self.koraba_w_sys+"/"+systemDict.get(sysa,"figgevoznaet_sysa")+"/"
                 #print(distURL)
                 rdis = requests.get(distURL, headers=headers)
                 #print(rdis.text)
@@ -134,8 +139,8 @@ class App():
              #   print("Distance to fly from "+systemDict.get(koraba_w_sys,"figgevoznaet_sysa")+" is "+str(parsed_dist_json["count"]))
                 dist_to_fly=self.parsed_dist_json["jumps"]
     
-            if (int(dist_to_fly)<int(jumpLimit) 
-                and int(datka['zkb']['totalValue'])>int(minCost)):
+            if (int(dist_to_fly)<int(self.jumpLimit) 
+                and int(datka['zkb']['totalValue'])>int(self.minCost)):
                 
                 
 #                    self.T.insert(END, 'GeeksforGeeks  BEST WEBSITE\n')
