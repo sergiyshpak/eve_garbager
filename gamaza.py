@@ -60,14 +60,24 @@ class App():
         self.root = Tk()
         self.root.title("GDSFDSADS EREF EA")
         
-        self.top_frame = Frame(self.root).pack()
-        self.bottom_frame = Frame(self.root).pack(side = "bottom")
+        self.top_frame = Frame(self.root)
+        self.bottom_frame = Frame(self.root)
+        self.top_frame.grid(row=0) 
+        self.bottom_frame.grid(row=1) 
 
-        btn1 = Button(self.top_frame, text = "Set Home", fg = "red", command = self.set_home).pack(side = "left")# 'fg - foreground' is used to color the contents
-        btn2 = Button(self.top_frame, text = "Set Dist", fg = "green", command = self.set_dist).pack(side = "left")# 'text' is used to write the text on the Button
+        self.e1 = Entry(self.top_frame ) 
+        self.e2 = Entry(self.top_frame) 
+        self.e1.grid(row=0, column=0) 
+        self.e2.grid(row=1, column=0) 
+
+        self.btn1 = Button(self.top_frame, text = "Set Home",  command = self.set_home)
+        self.btn2 = Button(self.top_frame, text = "Set Dist",  command = self.set_dist)
+        self.btn1.grid(row=0, column=1)  
+        self.btn2.grid(row=1, column=1)  
         
         self.T = Text( self.bottom_frame, height=40, width=190)
-        self.T.pack()
+        self.T.grid(row=0)
+        
         self.update_clock()
         self.root.mainloop()
 
@@ -93,6 +103,7 @@ class App():
             parsed_json = json.loads(r.text)
             datka=parsed_json['package']
             killid=str(datka['killID'])
+            print("--------- "+killid)
             sysa=str(datka['killmail']['solar_system_id'])
             totaldeneg='${:,.2f}'.format(datka['zkb']['totalValue'])
             shipp=str(datka['killmail']['victim']['ship_type_id'])
@@ -147,7 +158,7 @@ class App():
                 
                 
                 self.T.tag_configure("hlink", foreground='blue', underline=1)
-                self.T.tag_bind("hlink", "<Control-Button-1>",   lambda  e:self.openHLink(UREL1+killid+'/'))
+                self.T.tag_bind("hlink", "<Control-Button-1>",   lambda  e:self.openHLink('https://zkillboard.com/kill/'+killid+'/'))
                 self.T.insert(END, "ZKILLBOARD", "hlink")
                 self.T.insert(END, '   ' +lololo+'\n\n')
             
