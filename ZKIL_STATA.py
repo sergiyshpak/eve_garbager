@@ -108,20 +108,7 @@ while 1==1:
         dista=math.sqrt(xc**2+yc**2+zc**2) /1000
         dista=dista/149597870.7
 
-        #print(sysa)
-        dist_to_fly=100500
         if systemDict.get(sysa,"figgevoznaet_sysa")[0]!="J":
-            
-            """
-            distURL="http://everest.kaelspencer.com/jump/"+koraba_w_sys+"/"+systemDict.get(sysa,"figgevoznaet_sysa")+"/"
-            #print(distURL)
-            rdis = requests.get(distURL, headers=headers)
-            #print(rdis.text)
-            parsed_dist_json = json.loads(rdis.text)
-         #   print("Distance to fly from "+systemDict.get(koraba_w_sys,"figgevoznaet_sysa")+" is "+str(parsed_dist_json["count"]))
-            dist_to_fly=parsed_dist_json["jumps"]
-            
-            """
             
             countessa=0
             countessa=stata_dict.get(sysa,0)
@@ -131,7 +118,24 @@ while 1==1:
             printocount=printocount+1
             if printocount>printolimit:
                 printocount=0
-                print(stata_dict)
+                for siska in stata_dict: 
+                    dist_to_fly=100500
+                    dist_to_fly=sys_sys.get(koraba_w_sys+systemDict.get(siska,"ololo"),100500)
+                    if dist_to_fly==100500:
+                        distURL="http://everest.kaelspencer.com/jump/"+koraba_w_sys+"/"+systemDict.get(siska,"figgevoznaet_sysa")+"/"
+                        rdis = requests.get(distURL, headers=headers)
+                        try:
+                            parsed_dist_json = json.loads(rdis.text)
+                            dist_to_fly=parsed_dist_json["jumps"]
+                            sys_sys[koraba_w_sys+systemDict.get(siska,"ololo")]=dist_to_fly
+                        except:
+                            print("shit happend "+distURL)
+                    sseka=str(systemSec.get(siska,11))
+                    ssiska=systemDict.get(siska)
+                    sdist=str(dist_to_fly)
+                    sstatka=str(stata_dict[siska])
+                    print(siska+"   seka- "+sseka +" -=- "+ssiska+" ---dist--" +sdist+ "   kills --- "+sstatka)
+                print(" --------- " )                    
 
     time.sleep(sleepTime)
     
