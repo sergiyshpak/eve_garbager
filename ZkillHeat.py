@@ -138,7 +138,7 @@ while 1==1:
                         sstatka=str(stata_dict[siska])
                         #print(siska+"   seka- "+sseka +" -=- "+ssiska+" ---dist--" +sdist+ "   kills --- "+sstatka)
                         
-                        print("%10s  seka %14s -=- %14s --dist %3d  ---  kills %3d" % (siska, sseka, ssiska, dist_to_fly,  stata_dict[siska] ))
+                        print("%3d  kills - -- -  %10s  seka %14s -=- %14s --dist %3d  ---" % (stata_dict[siska], siska, sseka, ssiska, dist_to_fly ))
                     print(" --------- " )                    
     except:
         print('An error occured.')
